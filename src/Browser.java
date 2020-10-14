@@ -1,8 +1,4 @@
 import javax.swing.*;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
-import javax.swing.text.Document;
-import javax.swing.text.html.HTMLEditorKit;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
@@ -14,20 +10,24 @@ import java.net.URL;
 public class Browser extends JFrame {
     private JEditorPane browserWindow;
     private JTextField addressField;
+    private JButton htmlBtn;
 
 
     public Browser(){
         super("Simple Web Browser");
         // --------------- URL FIELD ----------------------
-        addressField = new JTextField("Enter a URL..");
+        addressField = new JTextField("https://dsv.su.se/");
         add(addressField, BorderLayout.NORTH);
+        htmlBtn = new JButton("HTML Renderer");
+        add(htmlBtn, BorderLayout.SOUTH);
+        htmlBtn.addActionListener(this:: htmlBtnListner);
         // --------------- URL FIELD END ------------------
 
         // ----------------- WINDOW -----------------------
 
         browserWindow = new JEditorPane();
         browserWindow.setEditable(false);
-        browserWindow.setContentType("text/html");
+
 
 
 
@@ -37,12 +37,25 @@ public class Browser extends JFrame {
         // --------------- WINDOW END ---------------------
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(700, 500);
+        this.setSize(900, 500);
 
     }
+
+    /* Metod som sätter contenttype på Editorpane browserwindow
+    * till html eller plain */
+    public void htmlBtnListner(ActionEvent event){
+        if(browserWindow.getContentType() != "text/html"){
+            browserWindow.setContentType("text/html");
+        } else {
+            browserWindow.setContentType("text/plain");
+        }
+        browserListner(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
+
+
+    }
+
     public void browserListner(ActionEvent event){
         try {
-
             clearWindow();
             StringBuffer buffer = new StringBuffer();
             String line = "";
@@ -70,8 +83,3 @@ public class Browser extends JFrame {
         new Browser();
     }
 }
- /*
- * HTMLEditorKit htmlKit = new HTMLEditorKit();
- * browserWindow.setEditorKit(htmlKit);
- *
- * */
