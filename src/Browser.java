@@ -53,7 +53,16 @@ public class Browser extends JFrame {
 
 
     }
-
+    /* Metod som vid "enter" i sökfältet
+    * skapar en StringBuffer, hämtar all
+    * text från en hemsida via en inputstreamreader
+    * och bufferedreader. Så länge bufferedreader
+    * != null, dvs finns ingenting kvar att läsa från hemsidan
+    * så läser bufferedreadern nästa rad.
+    *
+    * String buffern lägger till den rad som läses
+    * av bufferedreadern och kallar sist på dislpayText
+    * med bufferedreader som en sträng */
     public void browserListner(ActionEvent event){
         try {
             clearWindow();
@@ -74,11 +83,15 @@ public class Browser extends JFrame {
             e.printStackTrace();
         }
     }
-
+    /* Metod som rensar browserWindow på text */
     public void clearWindow() { browserWindow.setText(""); }
 
+    /* Metod som sätter sin parameter som texten
+    * som ska visas i browserWindow.*/
     public void displayText(String text){ browserWindow.setText(text); }
 
+
+    /* MAIN */
     public static void main(String[] args) {
         new Browser();
     }
